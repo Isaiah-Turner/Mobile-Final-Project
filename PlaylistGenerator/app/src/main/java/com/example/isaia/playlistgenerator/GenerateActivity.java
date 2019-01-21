@@ -26,6 +26,8 @@ import kaaes.spotify.webapi.android.SpotifyApi;
 import kaaes.spotify.webapi.android.SpotifyCallback;
 import kaaes.spotify.webapi.android.SpotifyError;
 import kaaes.spotify.webapi.android.SpotifyService;
+import kaaes.spotify.webapi.android.models.Artist;
+import kaaes.spotify.webapi.android.models.ArtistSimple;
 import kaaes.spotify.webapi.android.models.Pager;
 import kaaes.spotify.webapi.android.models.Playlist;
 import kaaes.spotify.webapi.android.models.PlaylistSimple;
@@ -41,8 +43,11 @@ import retrofit.client.Response;
 public class GenerateActivity extends AppCompatActivity {
     private SeekBar mPopularityBar;
     private SeekBar mSimilarityBar;
+
     private EditText mSimilarityText;
     private EditText mPopularityText;
+    private EditText mBlackListText;
+
     private Button mGenerateButton;
     private String mAccessToken;
     SpotifyApi api = new SpotifyApi();
@@ -124,14 +129,13 @@ public class GenerateActivity extends AppCompatActivity {
 
                 Recommendations r = generateRecommendations(mPopularityBar.getProgress(), mSimilarityBar.getProgress());
                 ArrayList<Track> toPass = new ArrayList<Track>(r.tracks);
+                toPass = filterTracks(toPass);
                 Intent i = new Intent(GenerateActivity.this, ViewActivity.class);
                 i.putParcelableArrayListExtra("TRACKS", toPass);
                 startActivity(i);
             }
         });
-
-
-
+        mBlackListText = (EditText)findViewById(R.id.blacklist_text);
     }
 
     private Recommendations generateRecommendations(int pop, int sim)
@@ -170,5 +174,35 @@ public class GenerateActivity extends AppCompatActivity {
         }
         ret = spotify.getPlaylist(userId, in.id);
         return ret;
+    }
+    private ArrayList<Track> filterTracks(ArrayList<Track> toFilter)
+    {
+       String[] blackListedArtists =  mBlackListText.getText().toString().split(",");
+       ArrayList<Track> ret = new ArrayList<>();
+       for(Track t: toFilter)
+       {
+           boolean keep = true;
+           for(String artist: blackListedArtists)
+           {
+               if(containsArtist(t.artists, artist)) {
+                   keep = false;
+                   break;
+               }
+           }
+           if(keep)
+           {
+               ret.add(t);
+           }
+       }
+       return ret;
+    }
+    private boolean containsArtist(List<ArtistSimple> artists, String blacklisted)
+    {
+        for(ArtistSimple a: artists)
+        {
+            if(blacklisted.trim().toLowerCase().equals(a.name.trim().toLowerCase()))
+                return true;
+        }
+        return false;
     }
 }

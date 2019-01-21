@@ -82,7 +82,7 @@
         android:id="@+id/blacklist_text"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:text="@string/instructions_for_blacklist"
+        android:hint="@string/instructions_for_blacklist"
         android:textSize="15sp"
         android:inputType="text"/>
 

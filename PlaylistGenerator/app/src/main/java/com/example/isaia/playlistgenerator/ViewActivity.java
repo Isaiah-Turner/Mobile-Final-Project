@@ -16,8 +16,9 @@ import kaaes.spotify.webapi.android.models.ArtistSimple;
 import kaaes.spotify.webapi.android.models.Track;
 
 public class ViewActivity extends AppCompatActivity  implements MyRecyclerViewAdapter.ItemClickListener{
-    private RecyclerView mSongList;
+    private RecyclerView mRecyler;
     private MyRecyclerViewAdapter adapter;
+    ArrayList<Track> mSongList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,23 +26,24 @@ public class ViewActivity extends AppCompatActivity  implements MyRecyclerViewAd
         setContentView(R.layout.activity_view);
 
         Intent i = getIntent();
-        ArrayList<Track> songList = i.getParcelableArrayListExtra("TRACKS");
+        mSongList = i.getParcelableArrayListExtra("TRACKS");
         ArrayList<String> songStrings = new ArrayList<>();
-        for (Track t : songList) {
+        for (Track t : mSongList) {
             ArrayList<String> artistString = new ArrayList<>();
             for(ArtistSimple a: t.artists)
                 artistString.add(a.name);
             songStrings.add(t.name + " by " + TextUtils.join(", ", artistString));
         }
-        mSongList = (RecyclerView) findViewById(R.id.song_text_list);
-        mSongList.setLayoutManager(new LinearLayoutManager(this));
+        mRecyler = (RecyclerView) findViewById(R.id.song_text_list);
+        mRecyler.setLayoutManager(new LinearLayoutManager(this));
         adapter = new MyRecyclerViewAdapter(this, songStrings);
         adapter.setClickListener(this);
-        mSongList.setAdapter(adapter);
+        mRecyler.setAdapter(adapter);
     }
     @Override
     public void onItemClick(View view, int position)
     {
-        Toast.makeText(this, "You clicked " + adapter.getItem(position), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, adapter.getItem(position) + ": type - " +
+                mSongList.get(position).type + ": duration - " + mSongList.get(position).duration_ms/1000, Toast.LENGTH_SHORT).show();
     }
 }
