@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">PlaylistGenerator</string>
+    <string name="name_with_space">Playlist Generator</string>
+    <string name="generate">Generate Playlist</string>
+    <string name="view">View Playlists</string>
+    <string name="greeting">Hello, %1$s.</string>
+    <string name="Popularity">Popularity</string>
+    <string name="Similarity">Similarity</string>
+    <string name="Blacklist">Blacklist</string>
+    <string name="instructions_for_blacklist">Enter artist or song names.</string>
+    <string name="fifty">50</string>
+    <string name="number">%1$d</string>
 </resources>
