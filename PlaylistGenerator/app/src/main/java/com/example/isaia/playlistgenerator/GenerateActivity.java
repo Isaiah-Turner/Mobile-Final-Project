@@ -59,6 +59,10 @@ public class GenerateActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_generate);
+        View decorView = getWindow().getDecorView();
+        decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
+        getSupportActionBar().hide();
+
         Intent i = getIntent();
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -132,6 +136,7 @@ public class GenerateActivity extends AppCompatActivity {
                 toPass = filterTracks(toPass);
                 Intent i = new Intent(GenerateActivity.this, ViewActivity.class);
                 i.putParcelableArrayListExtra("TRACKS", toPass);
+                i.putExtra("ACCESS_TOKEN", mAccessToken);
                 startActivity(i);
             }
         });

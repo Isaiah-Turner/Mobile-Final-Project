@@ -34,15 +34,4 @@
         android:background="#009D10"
         android:text="@string/generate"
         android:textColor="#ffffff" />
-
-    <Button
-        android:id="@+id/view_button"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="25dp"
-        android:background="#125188"
-        android:text="@string/view"
-        android:textColor="#ffffff" />
-
-
 </LinearLayout>

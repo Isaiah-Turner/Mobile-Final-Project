@@ -53,6 +53,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        View decorView = getWindow().getDecorView();
+        decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
+        getSupportActionBar().hide();
+
     }
     @Override
     protected void onStart(){
@@ -64,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         AuthenticationRequest.Builder builder =
                 new AuthenticationRequest.Builder(CLIENT_ID, AuthenticationResponse.Type.TOKEN, REDIRECT_URI);
 
-        builder.setScopes(new String[]{"streaming", "playlist-read-private", "playlist-modify-private"});
+        builder.setScopes(new String[]{"streaming", "playlist-read-private", "playlist-modify-private", "playlist-modify-public"});
         builder.setShowDialog(true);
         AuthenticationRequest request = builder.build();
 
@@ -89,14 +93,6 @@ public class MainActivity extends AppCompatActivity {
                 Intent i = new Intent(MainActivity.this, GenerateActivity.class);
                 i.putExtra("ACCESS_TOKEN", accessToken);
                 startActivity(i);
-            }
-        });
-
-        mView = (Button)findViewById(R.id.view_button);
-        mView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
             }
         });
 

@@ -10,4 +10,7 @@
     <string name="instructions_for_blacklist">Enter artist names separated by commas.</string>
     <string name="fifty">50</string>
     <string name="number">%1$d</string>
+    <string name="save_text">Save Playlist.</string>
+    <string name="name_hint">Playlist Name.</string>
+    <string name="make_public">Make playlist public?</string>
 </resources>
